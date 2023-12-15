@@ -1,25 +1,35 @@
-@extends('layout')
+@extends("layout")
 
-@section('content')
-	<div class="container">
-		<h1>Creacion de Contacto</h1>
-		<form class="card card-body " method="post" action="{{ route('printer-post') }}">
-            @csrf
-			<input type="text" class="form-control mb-4" name="contact-create-name" placeholder="Nombre...">
-			<input type="text" class="form-control mb-4" name="contact-create-lastname" placeholder="Apellido...">
-			<input type="text" class="form-control mb-4" name="contact-create-phone" placeholder="Telefono...">
-			<input type="text" class="form-control mb-4" name="contact-create-email" placeholder="Email...">
-			<input type="text" class="form-control mb-4" name="contact-create-address" placeholder="Direccion...">
+@section("content")
+	<div class="container mt-3">
+		<div class="w-75 m-auto">
+            {{-- si existe un error --}}
+            @if (session("error"))
+                <div class="alert alert-danger mt-2" role="alert">{{ session("error") }}</div>
+            @endif
+			<h1 class="">Creacion de Contacto</h1>
+			<form class="card card-body" method="post" action="{{ route("contactos_create_post") }}">
+				@csrf
+                @error("nombre")<div class="alert alert-danger mt-2" role="alert">{{ $message }}</div>@enderror
+				<input type="text" class="form-control mb-4" name="nombre" placeholder="Nombre...">
+                @error("apellido")<div class="alert alert-danger mt-2" role="alert">{{ $message }}</div>@enderror
+				<input type="text" class="form-control mb-4" name="apellido" placeholder="Apellido...">
+                @error("telefono")<div class="alert alert-danger mt-2" role="alert">{{ $message }}</div>@enderror
+				<input type="text" class="form-control mb-4" name="telefono" placeholder="Telefono...">
+                @error("email")<div class="alert alert-danger mt-2" role="alert">{{ $message }}</div>@enderror
+				<input type="text" class="form-control mb-4" name="email" placeholder="Email...">
+                @error("direccion")<div class="alert alert-danger mt-2" role="alert">{{ $message }}</div>@enderror
+				<input type="text" class="form-control mb-4" name="direccion" placeholder="Direccion...">
 
-			<select class="form-control mb-2" name="contact-create-grupo" id="contact-create-grupo">
-				<option value="-1" selected disabled>Seleccione un grupo</option>
-				<option value="1">Familia</option>
-				<option value="2">Amigos</option>
-				<option value="3">Trabajo</option>
-				<option value="4">Otros</option>
-			</select>
+				<select class="form-control mt-2 mb-4" name="select_grupo" id="select_grupo">
+					<option selected disabled>Seleccione un grupo</option>
+					@foreach ($grupos as $grupo)
+						<option value="{{ $grupo["id"] }}">{{ $grupo["nombre"] }}</option>
+					@endforeach
+				</select>
 
-			<button type="submit" class="btn btn-primary">Crear Contacto</button>
-		</form>
+				<button type="submit" class="btn btn-primary">Crear Contacto</button>
+			</form>
+		</div>
 	</div>
 @endsection

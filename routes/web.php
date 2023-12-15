@@ -32,6 +32,12 @@ route::group(['middleware' => 'guest'], function () {
 
 // logeado
 route::group(['middleware' => 'auth'], function () {
+    route::post('printer/post', function () {
+        return dump(request()->all());
+    })->name('printer_post');
+    route::get('printer/get', function () {
+        return dump(request()->all());
+    })->name('printer_get');
 
     Route::get('/', function () {
         return to_route('user_contactos_index');
@@ -39,23 +45,17 @@ route::group(['middleware' => 'auth'], function () {
 
     route::get('/user/contactos/index', [ContactoController::class, 'index'])->name('user_contactos_index');
 
-    route::get('/user/contactos/create', [ContactoController::class, 'create_view'])->name('user_contactos_create');
+    route::POST('/user/contactos/create', [ContactoController::class, 'create_view'])->name('user_contactos_create');
 
-    route::get('/user/contactos/update', [ContactoController::class, 'update_view'])->name('user_contactos_update');
+    route::POST('/user/contactos/update', [ContactoController::class, 'update_view'])->name('user_contactos_update');
 });
 
 route::group(['middleware' => 'auth'], function () {
     Route::post('/Logout', [AuthController::class, 'user_register_logout'])->name('user_register_logout');
 
-    route::post('/user/contactos/create/post', function () {
-        return view('contactos_create_post');
-    })->name('contactos_create_post');
+    route::post('/user/contactos/create/post',[ContactoController::class, 'contactos_create_post'])->name('contactos_create_post');
 
-    route::post('/user/contactos/update/post', function () {
-        return view('contactos_update_post');
-    })->name('contactos_update_post');
+    route::post('/user/contactos/update/post', [ContactoController::class, 'contactos_update_post'])->name('contactos_update_post');
 
-    route::post('/user/contactos/destroy/post', function () {
-        return dump(request()->all());
-    })->name('contactos_destroy_post');
+    route::post('/user/contactos/destroy/post',[ContactoController::class, 'contactos_destroy_post'])->name('contactos_destroy_post');
 });

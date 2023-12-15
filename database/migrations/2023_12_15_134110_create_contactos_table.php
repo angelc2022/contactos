@@ -21,7 +21,7 @@ return new class extends Migration {
             $table->string('direccion')
                 ->nullable()
                 ->default(null);
-            $table->string('grupo')
+            $table->string('grupo_id')
                 ->nullable()
                 ->default(null);
             $table->foreignId('user_id')
