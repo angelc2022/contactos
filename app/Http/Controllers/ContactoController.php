@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Contacto;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ContactoController extends Controller
@@ -11,7 +11,7 @@ class ContactoController extends Controller
     // VISTAS
     public function index(Request $request)
     {
-        $contactos = Contacto::where('user_id', auth()->user()->id)->get();
+        $contactos = Contacto::where('user_id', auth()->user()->id)->paginate(10);
         $grupos = [
             ['id' => 1, 'nombre' => 'Casa'],
             ['id' => 2, 'nombre' => 'Trabajo'],
@@ -53,20 +53,11 @@ class ContactoController extends Controller
             'nombre' => 'required|min:2|max:30|unique:contactos,nombre,' . auth()->user()->id . ',user_id',
             'apellido' => 'nullable|min:2|max:30',
             'telefono' => 'required|min:7|max:15|unique:contactos,telefono,' . auth()->user()->id . ',user_id',
-            'email' => 'required|unique:contactos,email,' . auth()->user()->id . ',user_id',
+            'email' => 'required|email|unique:contactos,email,' . auth()->user()->id . ',user_id',
             'direccion' => 'nullable',
-            'grupo' => 'nullable',
+            'select_grupo' => 'nullable',
         ]);
 
-        $credentials = [
-            'nombre' => $request->nombre,
-            'apellido' => $request->apellido,
-            'telefono' => $request->telefono,
-            'email' => $request->email,
-            'direccion' => $request->direccion,
-            'grupo' => $request->select_grupo,
-            'user_id' => auth()->user()->id,
-        ];
         try {
             $contacto = new Contacto;
             $contacto->nombre = $request->nombre;
@@ -82,6 +73,44 @@ class ContactoController extends Controller
             return to_route('user_contactos_index');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function contactos_update_post(Request $request)
+    {
+        $request->validate([
+            'nombre' => 'required|min:2|max:30|unique:contactos,nombre,' . auth()->user()->id . ',user_id',
+            'apellido' => 'nullable|min:2|max:30',
+            'telefono' => 'required|min:7|max:15|unique:contactos,telefono,' . auth()->user()->id . ',user_id',
+            'email' => 'required|email|unique:contactos,email,' . auth()->user()->id . ',user_id',
+            'direccion' => 'nullable',
+            'select_grupo' => 'nullable',
+        ]);
+
+        try {
+            $contacto = Contacto::where('id', $request->contacto_id)->first();
+            $contacto->nombre = $request->nombre;
+            $contacto->apellido = $request->apellido;
+            $contacto->telefono = $request->telefono;
+            $contacto->email = $request->email;
+            $contacto->direccion = $request->direccion;
+            $contacto->grupo_id = $request->select_grupo;
+
+            $contacto->save();
+            return to_route('user_contactos_index');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function contactos_destroy_post(Request $request)
+    {
+        try {
+            $contacto_to_delete = Contacto::where('id', $request->contacto_id)->first();
+            $contacto_to_delete->delete();
+            return to_route('user_contactos_index');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', $th->getMessage());
         }
     }
 }

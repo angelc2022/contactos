@@ -46,17 +46,29 @@
 						<td>
 							<div class='d-flex' style="gap:2rem">
 								<div style='display: inline'>
-									<form method="POST" action="{{ route('user_contactos_update', ['contacto_id' => $contacto->id]) }}">
-										@csrf
-										<button type="submit" class="btn btn-success" onclick="this.closest('form').submit()">Modificar</button>
-									</form>
+									<a class="btn btn-success"
+										href="{{ route('user_contactos_update') }}?contacto_id={{ $contacto->id }}">Modificar</a>
 								</div>
 								<div style='display: inline'>
-									<form method="POST" action="{{ route('contactos_destroy_post', ['contacto_id' => $contacto->id]) }}">
+									<form id="eliminarForm" method="POST"
+										action="{{ route('contactos_destroy_post', ['contacto_id' => $contacto->id]) }}">
 										@csrf
-										<a type="button" class="btn btn-danger" onclick="this.closest('form').submit()">Eliminar</a>
+										<!-- Agrega el evento onclick para mostrar la confirmación -->
+										<a type="button" class="btn btn-danger" href="#" onclick="confirmarEliminacion()">Eliminar</a>
 									</form>
 								</div>
+
+								<!-- Agrega el script de confirmación -->
+								<script>
+									function confirmarEliminacion() {
+										// Utiliza la función confirm de JavaScript
+										if (confirm('¿Estás seguro de que deseas eliminar este contacto?')) {
+											// Si el usuario confirma, envía el formulario
+											document.getElementById('eliminarForm').submit();
+										}
+									}
+								</script>
+
 							</div>
 						</td>
 					</tr>
@@ -64,5 +76,13 @@
 			</tbody>
 
 		</table>
+		{{-- inserta paginacion para los contactos --}}
+		<nav aria-label="Page navigation ">
+			<ul class="pagination justify-content-center">
+				<li class="page-item"><a class="page-link" href="{{ $contactos->previousPageUrl() }}">Página Anterior</a>
+				</li>
+				<li class="page-item"><a class="page-link" href="{{ $contactos->nextPageUrl() }}">Siguiente Página</a></li>
+			</ul>
+		</nav>
 	</div>
 @endsection

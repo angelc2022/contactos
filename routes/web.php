@@ -39,15 +39,15 @@ route::group(['middleware' => 'auth'], function () {
         return dump(request()->all());
     })->name('printer_get');
 
-    Route::get('/', function () {
+    Route::post('/', function () {
         return to_route('user_contactos_index');
     })->name('redirect_to_index');
 
     route::get('/user/contactos/index', [ContactoController::class, 'index'])->name('user_contactos_index');
 
-    route::POST('/user/contactos/create', [ContactoController::class, 'create_view'])->name('user_contactos_create');
+    route::get('/user/contactos/create', [ContactoController::class, 'create_view'])->name('user_contactos_create');
 
-    route::POST('/user/contactos/update', [ContactoController::class, 'update_view'])->name('user_contactos_update');
+    route::get('/user/contactos/update', [ContactoController::class, 'update_view'])->name('user_contactos_update');
 });
 
 route::group(['middleware' => 'auth'], function () {

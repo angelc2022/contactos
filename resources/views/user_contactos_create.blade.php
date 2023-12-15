@@ -8,7 +8,7 @@
                 <div class="alert alert-danger mt-2" role="alert">{{ session("error") }}</div>
             @endif
 			<h1 class="">Creacion de Contacto</h1>
-			<form class="card card-body" method="post" action="{{ route("contactos_create_post") }}">
+			<form class="card card-body" method="POST" action="{{ route("contactos_create_post") }}">
 				@csrf
                 @error("nombre")<div class="alert alert-danger mt-2" role="alert">{{ $message }}</div>@enderror
 				<input type="text" class="form-control mb-4" name="nombre" placeholder="Nombre...">
