@@ -1,8 +1,8 @@
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg bg-secondary navbar-light ">
+<nav class="navbar navbar-expand-lg bg-primary navbar-dark ">
 	<div class="container">
 		<ul class="col-12 navbar-nav">
-			<li class="nav-item col-1"><a class="navbar-brand" href="#">Inicio</a></li>
+			<li class="nav-item col-1"><a class="navbar-brand" href="{{route ('user_contactos_index')}}">Inicio</a></li>
             <li class="nav-item col-1"><a class="navbar-brand" href="#">- {{Auth()->User()->name}}</a></li>
             <li class="nav-item col-7"><a class="navbar-brand" href="#"></a></li>
             <li class="nav-item col-3 text-end">

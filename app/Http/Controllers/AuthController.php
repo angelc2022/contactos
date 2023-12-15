@@ -20,11 +20,11 @@ class AuthController extends Controller
 
     public function user_register_index(Request $request)
     {
-        return view('user-register-index');
+        return view('user_register_index');
     }
     public function user_register_create(Request $request)
     {
-        return view('user-register-create');
+        return view('user_register_create');
     }
 
     // POST
@@ -41,7 +41,7 @@ class AuthController extends Controller
         $user = User::create($credentials);
         Auth::login($user);
         $request->session()->regenerate();
-        return to_route('user-contactos-index');
+        return to_route('user_contactos_index');
     }
     public function user_register_index_post(Request $request)
     {
@@ -53,7 +53,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return to_route('user-contactos-index');
+            return to_route('user_contactos_index');
         } else {
             return redirect()->back()->with('error', 'Email or password incorrect');
         }

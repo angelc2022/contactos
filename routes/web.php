@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContactoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
@@ -32,35 +33,29 @@ route::group(['middleware' => 'guest'], function () {
 // logeado
 route::group(['middleware' => 'auth'], function () {
 
-    Route::get('/', function(){
-        return to_route('user-contactos-index');
+    Route::get('/', function () {
+        return to_route('user_contactos_index');
     })->name('redirect_to_index');
 
-    route::get('/user/contactos/index', function () {
-        return view('user-contactos-index');
-    })->name('user-contactos-index');
+    route::get('/user/contactos/index', [ContactoController::class, 'index'])->name('user_contactos_index');
 
-    route::get('/user/contactos/create', function () {
-        return view('user-contactos-create');
-    })->name('user-contactos-create');
+    route::get('/user/contactos/create', [ContactoController::class, 'create_view'])->name('user_contactos_create');
 
-    route::get('/user/contactos/update', function () {
-        return view('user-contactos-update');
-    })->name('user-contactos-update');
+    route::get('/user/contactos/update', [ContactoController::class, 'update_view'])->name('user_contactos_update');
 });
 
 route::group(['middleware' => 'auth'], function () {
     Route::post('/Logout', [AuthController::class, 'user_register_logout'])->name('user_register_logout');
-    
+
     route::post('/user/contactos/create/post', function () {
-        return view('contactos-create-post');
-    })->name('contactos-create-post');
+        return view('contactos_create_post');
+    })->name('contactos_create_post');
 
     route::post('/user/contactos/update/post', function () {
-        return view('contactos-update-post');
-    })->name('contactos-update-post');
+        return view('contactos_update_post');
+    })->name('contactos_update_post');
 
     route::post('/user/contactos/destroy/post', function () {
         return dump(request()->all());
-    })->name('contactos-destroy-post');
+    })->name('contactos_destroy_post');
 });

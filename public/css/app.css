@@ -1,0 +1,15 @@
+#footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+
+/* media queries */
+@media (max-width: 860px) {
+    #footer {
+        margin-top: 1rem;
+        position: relative;
+    }
+}
+

@@ -1,8 +1,8 @@
 @extends('layout')
 
 @section('content')
-	<div class="container">
-		<h1>Actualizando Contacto con ID: <span>{{ session('_token') }}</span></h1>
+	<div class="container mt-3">
+		<h1>Actualizar contacto</h1>
 		<form class="card card-body " method="POST" action="{{ route('printer-post') }}">
 			@csrf
 			<input type="text" class="form-control mb-2" name="contact-update-name" placeholder="Nombre...">
