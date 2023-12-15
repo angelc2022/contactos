@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use app\Models\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -44,7 +44,7 @@ class AuthController extends Controller
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
             $user->save();
-            
+
             Auth::login($user);
             return to_route('user-contactos-index');
         } catch (ValidationException $e) {
