@@ -7,59 +7,24 @@ use Illuminate\Http\Request;
 
 class ContactoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    // VISTAS
     public function index()
     {
-        //
+        $contacts = Contacto::where('user_id', auth()->user()->id)->get();
+        return view('user-contactos-index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create_view()
     {
-        //
+        return view('user-contactos-create');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function update_view(Request $request)
     {
-        //
-    }
+        $contacto = Contacto::find($request->contacto_id);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Contacto $contacto)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Contacto $contacto)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Contacto $contacto)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Contacto $contacto)
-    {
-        //
+        return view('user-contactos-update', [
+            'contacto' => $contacto
+        ]);
     }
 }

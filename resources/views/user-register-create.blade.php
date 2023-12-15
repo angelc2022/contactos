@@ -7,38 +7,44 @@
 				<div class="col-12 col-md-8 col-lg-6 col-xl-5">
 					<div class="card bg-light text-dark" style="border-radius: 1rem;">
 						<div class="card-body p-5 text-center">
-
-							<form method="POST" action="{{route ('user-contactos-index')}}" class="mb-md-5 mt-md-4">
-                                @csrf
+							<form method="POST" action="{{ route('user_register_create_post') }}" class="mb-md-5 mt-md-4">
+								@csrf
 								<h2 class="fw-bold mb-2 text-uppercase">Registro de usuario</h2>
-								<p class="text-dark mb-4">Ingrese las credenciales</p>
-
-								<div class="form-outline form-white mb-4">
-									<input type="text" id="logup_username" class="form-control form-control-lg" name="logup_username"
+								<p class="text-dark mb-4">Ingrese sus datos</p>
+								<div class="form-outline form-white m-2">
+									<input type="text" id="name" class="form-control form-control-lg" name="name"
 										placeholder="Usuario" />
 								</div>
-								<div class="form-outline form-white mb-4">
-									<input type="email" id="logup_email" class="form-control form-control-lg" name="logup_email"
+								@error('name')
+									<div class="alert alert-danger m-2" role="alert">
+										{{ $message }}
+									</div>
+								@enderror
+								<div class="form-outline form-white m-2">
+									<input type="email" id="email" class="form-control form-control-lg" name="email"
 										placeholder="Correo electronico" />
 								</div>
-
-								<div class="form-outline form-white mb-4 ">
-									<input type="password" id="logup_password" class="form-control form-control-lg" name="logup_password"
+								@error('email')
+									<div class="alert alert-danger m-2" role="alert">
+										{{ $message }}
+									</div>
+								@enderror
+								<div class="form-outline form-white m-2">
+									<input type="password" id="password" class="form-control form-control-lg" name="password"
 										placeholder="Contraseña" />
 								</div>
-
-								{{-- <p class="small mb-3 pb-lg-2"><a class="text-dark" href="#!">Forgot password?</a></p> --}}
-
+								@error('password')
+									<div class="alert alert-danger m-2" role="alert">
+										{{ $message }}
+									</div>
+								@enderror
 								<button class="btn btn-outline-dark btn-lg px-5" type="submit">Iniciar</button>
-
 							</form>
-
 							<div>
-								<p class="mb-0">Ya tienes una cuenta? <a href="{{ route('user-register-index') }}"
-										class="text-dark fw-bold">Registrarse.</a>
+								<p class="mb-0">Ya tienes una cuenta? <a href="{{ route('user_register_index') }}"
+										class="text-dark fw-bold">Inicia Sesion.</a>
 								</p>
 							</div>
-
 						</div>
 					</div>
 				</div>

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,15 +16,15 @@ use Illuminate\Support\Facades\Route;
 
 // no logeado
 route::group(['middleware' => 'guest'], function () {
-    Route::get('/', function () {
-        return to_route('user-register-index');
-    });
-    Route::get('/Signin', function () {
-        return view('user-register-index');
-    })->name('user-register-index');
-    Route::get('/Signup', function () {
-        return view('user-register-create');
-    })->name('user-register-create');
+    Route::get('/', [AuthController::class, 'redirect_to_login'])->name('redirect_to_login');
+    Route::get('/Signin', [AuthController::class, 'user_register_index'])->name('user_register_index');
+    Route::get('/Signup', [AuthController::class, 'user_register_create'])->name('user_register_create');
+});
+
+route::group(['middleware' => 'guest'], function () {
+    Route::post('/Signin', [AuthController::class, 'user_register_index_post'])->name('user_register_index_post');
+    Route::post('/Signup', [AuthController::class, 'user_register_create_post'])->name('user_register_create_post');
+    Route::post('/Logout', [AuthController::class, 'user_register_logout'])->name('user_register_logout');
     route::post('printer', function () {
         return dump(request()->all());
     })->name('printer-post');
@@ -35,7 +36,7 @@ route::group(['middleware' => 'auth'], function () {
     route::get('/user/contactos/index', function () {
         return view('user-contactos-index');
     })->name('user-contactos-index');
-    
+
     route::get('/user/contactos/create', function () {
         return view('user-contactos-create');
     })->name('user-contactos-create');
