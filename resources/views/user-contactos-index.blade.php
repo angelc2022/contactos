@@ -30,7 +30,7 @@
                                     </form>
                                 </div>
                                 <div style='display: inline'>
-                                    <form method="post" action="{{ route('user-contactos-destroy', ['id_usuario' => $i]) }}">
+                                    <form method="post" action="{{ route('contactos-destroy-post', ['id_usuario' => $i]) }}">
                                         @csrf
                                         <button type="submit" class="btn btn-danger">Eliminar</button>
                                     </form>

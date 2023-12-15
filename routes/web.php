@@ -32,6 +32,10 @@ route::group(['middleware' => 'guest'], function () {
 // logeado
 route::group(['middleware' => 'auth'], function () {
 
+    route::get('/user/contactos/index', function () {
+        return view('user-contactos-index');
+    })->name('user-contactos-index');
+    
     route::get('/user/contactos/create', function () {
         return view('user-contactos-create');
     })->name('user-contactos-create');
@@ -39,12 +43,19 @@ route::group(['middleware' => 'auth'], function () {
     route::get('/user/contactos/update', function () {
         return view('user-contactos-update');
     })->name('user-contactos-update');
+});
 
-    route::get('/user/contactos/index', function () {
-        return view('user-contactos-index');
-    })->name('user-contactos-index');
+route::group(['middleware' => 'auth'], function () {
 
-    route::post('/user/contactos/destroy', function () {
+    route::post('/user/contactos/create/post', function () {
+        return view('contactos-create-post');
+    })->name('contactos-create-post');
+
+    route::post('/user/contactos/update/post', function () {
+        return view('contactos-update-post');
+    })->name('contactos-update-post');
+
+    route::post('/user/contactos/destroy/post', function () {
         return dump(request()->all());
-    })->name('user-contactos-destroy');
+    })->name('contactos-destroy-post');
 });
