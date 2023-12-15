@@ -24,7 +24,6 @@ route::group(['middleware' => 'guest'], function () {
 route::group(['middleware' => 'guest'], function () {
     Route::post('/Signin', [AuthController::class, 'user_register_index_post'])->name('user_register_index_post');
     Route::post('/Signup', [AuthController::class, 'user_register_create_post'])->name('user_register_create_post');
-    Route::post('/Logout', [AuthController::class, 'user_register_logout'])->name('user_register_logout');
     route::post('printer', function () {
         return dump(request()->all());
     })->name('printer-post');
@@ -32,6 +31,10 @@ route::group(['middleware' => 'guest'], function () {
 
 // logeado
 route::group(['middleware' => 'auth'], function () {
+
+    Route::get('/', function(){
+        return to_route('user-contactos-index');
+    })->name('redirect_to_index');
 
     route::get('/user/contactos/index', function () {
         return view('user-contactos-index');
@@ -47,7 +50,8 @@ route::group(['middleware' => 'auth'], function () {
 });
 
 route::group(['middleware' => 'auth'], function () {
-
+    Route::post('/Logout', [AuthController::class, 'user_register_logout'])->name('user_register_logout');
+    
     route::post('/user/contactos/create/post', function () {
         return view('contactos-create-post');
     })->name('contactos-create-post');
