@@ -3,7 +3,7 @@
 @section('content')
 	<div class="container">
 		<h1>Actualizando Contacto con ID: <span>{{ session('_token') }}</span></h1>
-		<form class="card card-body " method="post" action="{{ route('printer-post') }}">
+		<form class="card card-body " method="POST" action="{{ route('printer-post') }}">
 			@csrf
 			<input type="text" class="form-control mb-2" name="contact-update-name" placeholder="Nombre...">
 			<input type="text" class="form-control mb-2" name="contact-update-lastname" placeholder="Apellido...">

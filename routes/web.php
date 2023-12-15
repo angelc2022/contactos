@@ -13,43 +13,38 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-route::group(['middleware' => 'guest'], function () {
-
-
-});
 // no logeado
-
-Route::get('/', function () {
-    return to_route('user-register-index');
+route::group(['middleware' => 'guest'], function () {
+    Route::get('/', function () {
+        return to_route('user-register-index');
+    });
+    Route::get('/Signin', function () {
+        return view('user-register-index');
+    })->name('user-register-index');
+    Route::get('/Signup', function () {
+        return view('user-register-create');
+    })->name('user-register-create');
+    route::post('printer', function () {
+        return dump(request()->all());
+    })->name('printer-post');
 });
-Route::get('/Signin', function () {
-    return view('user-register-index');
-})->name('user-register-index');
-
-Route::get('/Signup', function () {
-    return view('user-register-create');
-})->name('user-register-create');
-
-route::post('printer', function () {
-    return dump(request()->all());
-})->name('printer-post');
 
 // logeado
+route::group(['middleware' => 'auth'], function () {
 
+    route::get('/user/contactos/create', function () {
+        return view('user-contactos-create');
+    })->name('user-contactos-create');
 
+    route::get('/user/contactos/update', function () {
+        return view('user-contactos-update');
+    })->name('user-contactos-update');
 
-route::get('/user/contactos/create', function () {
-    return view('user-contactos-create');
-})->name('user-contactos-create');
+    route::get('/user/contactos/index', function () {
+        return view('user-contactos-index');
+    })->name('user-contactos-index');
 
-route::get('/user/contactos/update', function () {
-    return view('user-contactos-update');
-})->name('user-contactos-update');
-
-route::get('/user/contactos/index', function () {
-    return view('user-contactos-index');
-})->name('user-contactos-index');
-
-route::post('/user/contactos/destroy', function () {
-    return dump(request()->all());
-})->name('user-contactos-destroy');
+    route::post('/user/contactos/destroy', function () {
+        return dump(request()->all());
+    })->name('user-contactos-destroy');
+});

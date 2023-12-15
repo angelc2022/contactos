@@ -18,7 +18,7 @@
 	</head>
 
 	<body>
-		@guest
+		@auth
 			<header>
 				@include('layout-navbar')
 			</header>
@@ -28,12 +28,12 @@
 			<footer class="bg-light text-center ">
 				@include('layout-footer')
 			</footer>
-		@endguest
-		{{-- @guest
-			<main>
+		@endauth
+		@guest
+			<main class="bg-dark">
 				@yield('content')
 			</main>
-		@endguest --}}
+		@endguest
 		<!-- Bootstrap JavaScript Libraries -->
 		<script
 			src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
