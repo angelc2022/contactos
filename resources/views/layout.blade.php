@@ -23,9 +23,9 @@
 			<main>
 				@yield('content')
 			</main>
-			<footer class="bg-light text-center footer" id="footer">
+			{{-- <footer class="bg-light text-center footer" id="footer">
 				@include('layout-footer')
-			</footer>
+			</footer> --}}
 		@endauth
 		@guest
 			<main class="bg-dark">
